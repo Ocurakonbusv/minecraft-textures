@@ -1,7 +1,8 @@
 Body{
     margin:0;
     min-height:100vh;
-    background-image:url("E13EB351-1BB0-434F-B3B1-25465B88B5E0.png");
+    /* 背景画像を新しい名前「background.png」に修正したで！ */
+    background-image:url("background.png");
     background-size:cover;
     background-position:center;
     color:white;
@@ -23,7 +24,7 @@ h1{
     text-shadow:0 0 15px #66d9ff;
 }
 
-/* ② サブタイトル（1.2rem から 1.8rem に2段階大きくしたで！） */
+/* ② サブタイトル（2段階大きくしたで！） */
 header p{
     color:#ddd;
     margin-top:10px;
@@ -42,24 +43,24 @@ header p{
     max-width:500px;
 }
 
-/* ③ テクスチャ名 Azure 16x（元のサイズから 2.2rem に2段階デカく！） */
+/* ③ テクスチャ名 Azure 16x（2段階大きく！） */
 h2{
     color:#66d9ff;
     margin-bottom:20px;
     font-size:2.2rem;
 }
 
-/* ④ Downloadボタン（文字を 1.5rem にして、ボタン自体も一回り大きく押しやすく！） */
+/* ④ Downloadボタン（2段階大きく！） */
 .download-btn{
     display:inline-block;
     margin-top:20px;
-    padding:20px 50px; /* ボタンの余白を広げてデカくした */
+    padding:20px 50px;
     background:#66d9ff;
     color:black;
     text-decoration:none;
     border-radius:10px;
     font-weight:bold;
-    font-size:1.5rem;   /* 文字を2段階大きく */
+    font-size:1.5rem;
     transition:0.3s;
 }
 
