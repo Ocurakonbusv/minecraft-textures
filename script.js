@@ -15,7 +15,7 @@ document.querySelectorAll(".hidden").forEach(el => {
 // === 追加したおもしろギミック ===
 document.addEventListener("DOMContentLoaded", () => {
 
-    // --- 要素1：一言メッセージ（順番に切り替える仕組み ＆ 位置自動調整） ---
+    // --- 要素1：一言メッセージ（順番に切り替える仕組み） ---
     const messages = [
         "水色ベースのテクスチャです！",
         "制作期間は約1ヶ月です！",
@@ -24,55 +24,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const msgElement = document.getElementById("random-msg");
     
     if (msgElement) {
-        // ブラウザに保存されている「前回の番号」を読み込む（最初は0）
         let currentIndex = parseInt(localStorage.getItem("msgIndex")) || 0;
-        
-        // 範囲外になっていないかチェック（念のため）
         if (currentIndex >= messages.length) {
             currentIndex = 0;
         }
-
-        // メッセージを表示
         msgElement.innerText = messages[currentIndex];
 
-        // アイコンの真上にきれいな吹き出しとして配置されるようにCSSを自動適用
-        msgElement.style.display = "block";
-        msgElement.style.margin = "0 auto 25px auto";
-        msgElement.style.width = "fit-content";
-
-        // 次回のために、番号を1つ進めてブラウザに保存する
         let nextIndex = (currentIndex + 1) % messages.length;
         localStorage.setItem("msgIndex", nextIndex);
     }
 
-    // --- 要素2：アイコンタップで剣を振る音＆アニメーション（遅延対策・連打可能版） ＋ 写真・説明の表示 ---
+    // --- 要素2：アイコンタップで剣を振る音＆アニメーション ＋ 写真・説明の表示 ---
     const icon = document.getElementById("pack-icon");
-    const infoSection = document.getElementById("pack-info-section"); // 写真と説明のエリアを捕まえる
+    const infoSection = document.getElementById("pack-info-section");
     
-    // 音ファイルをあらかじめ読み込んで準備（プリロード）しておく
     const audio = new Audio("sound.mp3"); 
     audio.preload = "auto"; 
-    audio.volume = 0.5; // 音量調整
+    audio.volume = 0.5;
 
     if (icon) {
         icon.addEventListener("click", () => {
-            // タップされた瞬間に音の再生位置を最初に戻して爆速再生
             audio.currentTime = 0;
             audio.play().catch(error => {
                 console.log("初期タップ前の制限解除待ち:", error);
             });
 
-            // アイコンを一瞬だけシュッと傾ける
             icon.style.transform = "scale(0.9) rotate(-15deg)";
             setTimeout(() => {
                 icon.style.transform = "scale(1) rotate(0deg)";
             }, 100);
 
-            // 【新ギミック】タップされたら、隠れてる写真と説明文をパッと表示する
             if (infoSection) {
                 infoSection.style.display = "block";
-                
-                // ★【ここにお引越し！】写真と説明が表示された瞬間に、初めて500pxの余白を作る！
                 document.body.style.paddingBottom = "500px";
             }
         });
@@ -85,14 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
             downloadBtn.innerText = "Downloading...";
             downloadBtn.style.backgroundColor = "#444";
             downloadBtn.style.color = "#888";
-            downloadBtn.style.boxShadow = "none"; // 光を一時的に消す
+            downloadBtn.style.boxShadow = "none";
 
-            // 3秒経ったら元のカッコいいボタンに戻す
             setTimeout(() => {
                 downloadBtn.innerText = "Download";
                 downloadBtn.style.backgroundColor = "#66d9ff";
                 downloadBtn.style.color = "black";
-                downloadBtn.style.boxShadow = ""; // 光を復活
+                downloadBtn.style.boxShadow = "";
             }, 3000);
         });
     }
