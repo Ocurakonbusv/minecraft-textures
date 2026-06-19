@@ -1,94 +1,39 @@
-// === 元のふわっと浮き出るアニメーション ===
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting){
-            entry.target.classList.add("show");
-        }
-    });
-});
+<!DOCTYPE html>
+<html>
+<head>
+<title>Minecraft Textures</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-document.querySelectorAll(".hidden").forEach(el => {
-    observer.observe(el);
-});
+<header>
+    <h1>Minecraft Textures</h1>
+    <p>Texture Pack Downloads</p>
+</header>
 
-
-// === 追加したおもしろギミック ===
-document.addEventListener("DOMContentLoaded", () => {
-
-    // --- 要素1：一言メッセージ（順番に切り替える仕組み） ---
-    const messages = [
-        "水色ベースのテクスチャです！",
-        "制作期間は約1ヶ月です！",
-        "1000人記念の配布テクスチャです！"
-    ];
-    const msgElement = document.getElementById("random-msg");
+<div class="card hidden">
+    <h2>Azure 16x</h2>
     
-    if (msgElement) {
-        // ブラウザに保存されている「前回の番号」を読み込む（最初は0）
-        let currentIndex = parseInt(localStorage.getItem("msgIndex")) || 0;
+    <img src="icon.png" alt="Pack Icon" id="pack-icon" style="width: 100px; height: 100px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #66d9ff; cursor: pointer; transition: transform 0.1s;">
+    
+    <p id="random-msg" style="color: #66d9ff; font-weight: bold; font-size: 1.1rem; margin-bottom: 20px; height: 1.5rem; text-align: center;"></p>
+    
+    <div id="pack-info-section" style="display: none; margin-top: 20px; text-align: center;">
         
-        // 範囲外になっていないかチェック
-        if (currentIndex >= messages.length) {
-            currentIndex = 0;
-        }
+        <img src="screenshot1.png" alt="Azure 16x スクショ1" style="width: 100%; max-width: 400px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 10px; border: 1px solid #66d9ff; margin-bottom: 10px;">
+        
+        <img src="screenshot2.png" alt="Azure 16x スクショ2" style="width: 100%; max-width: 400px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 10px; border: 1px solid #66d9ff; margin-bottom: 15px;">
+        
+        <p style="color: #eee; font-size: 1.1rem; line-height: 1.6; padding: 0 10px; text-align: left; margin-top: 15px; margin-bottom: 20px;">
+            Azure16xというテクスチャです。水色がベースのテクスチャで、1000人記念で配布しました。
+            UIなどは見やすく調整し、装備やその他ツール類なども頑張ったので是非使ってほしいです！
+        </p>
 
-        // メッセージを表示
-        msgElement.innerText = messages[currentIndex];
-
-        // 次回のために、番号を1つ進めてブラウザに保存する
-        let nextIndex = (currentIndex + 1) % messages.length;
-        localStorage.setItem("msgIndex", nextIndex);
-    }
-
-    // --- 要素2：アイコンタップで剣を振る音＆アニメーション ＋ 写真・説明の表示 ---
-    const icon = document.getElementById("pack-icon");
-    const infoSection = document.getElementById("pack-info-section"); // 写真と説明のエリアを捕まえる
+    </div>
     
-    // 音ファイルをあらかじめ読み込んで準備（プリロード）しておく
-    const audio = new Audio("sound.mp3"); 
-    audio.preload = "auto"; 
-    audio.volume = 0.5; // 音量調整
+    <a href="Azure_16x.mcpack" download class="download-btn" id="download-btn">Download</a>
+</div>
 
-    if (icon) {
-        icon.addEventListener("click", () => {
-            // タップされた瞬間に音の再生位置を最初に戻して爆速再生
-            audio.currentTime = 0;
-            audio.play().catch(error => {
-                console.log("初期タップ前の制限解除待ち:", error);
-            });
-
-            // アイコンを一瞬だけシュッと傾ける
-            icon.style.transform = "scale(0.9) rotate(-15deg)";
-            setTimeout(() => {
-                icon.style.transform = "scale(1) rotate(0deg)";
-            }, 100);
-
-            // 【新ギミック】タップされたら、隠れてる写真2枚と説明文をパッと表示する
-            if (infoSection) {
-                infoSection.style.display = "block";
-                
-                // 写真が表示された瞬間に、初めて500pxの余白を作る！
-                document.body.style.paddingBottom = "500px";
-            }
-        });
-    }
-
-    // --- 要素3：ボタンを押したら「Downloading...」に切り替える ---
-    const downloadBtn = document.querySelector(".download-btn");
-    if (downloadBtn) {
-        downloadBtn.addEventListener("click", () => {
-            downloadBtn.innerText = "Downloading...";
-            downloadBtn.style.backgroundColor = "#444";
-            downloadBtn.style.color = "#888";
-            downloadBtn.style.boxShadow = "none"; // 光を一時的に消す
-
-            // 3秒経ったら元のカッコいいボタンに戻す
-            setTimeout(() => {
-                downloadBtn.innerText = "Download";
-                downloadBtn.style.backgroundColor = "#66d9ff";
-                downloadBtn.style.color = "black";
-                downloadBtn.style.boxShadow = ""; // 光を復活
-            }, 3000);
-        });
-    }
-});
+<script src="script.js"></script>
+</body>
+</html>
