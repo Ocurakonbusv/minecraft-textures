@@ -87,4 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 3000);
         });
     }
+
+    // === 【おくら流新機能】スクロールできる範囲を長くする ===
+    // ページの一番下に500pxの透明な余白を自動で作る
+    document.body.style.paddingBottom = "500px";
 });
