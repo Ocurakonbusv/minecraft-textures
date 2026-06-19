@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // メッセージを表示
         msgElement.innerText = messages[currentIndex];
 
-        // 【ここを追加！】アイコンの真上にきれいな吹き出しとして配置されるようにCSSを自動適用
+        // アイコンの真上にきれいな吹き出しとして配置されるようにCSSを自動適用
         msgElement.style.display = "block";
         msgElement.style.margin = "0 auto 25px auto";
         msgElement.style.width = "fit-content";
@@ -45,8 +45,9 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("msgIndex", nextIndex);
     }
 
-    // --- 要素2：アイコンタップで剣を振る音＆アニメーション（遅延対策・連打可能版） ---
+    // --- 要素2：アイコンタップで剣を振る音＆アニメーション（遅延対策・連打可能版） ＋ 写真・説明の表示 ---
     const icon = document.getElementById("pack-icon");
+    const infoSection = document.getElementById("pack-info-section"); // 写真と説明のエリアを捕まえる
     
     // 音ファイルをあらかじめ読み込んで準備（プリロード）しておく
     const audio = new Audio("sound.mp3"); 
@@ -66,6 +67,14 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 icon.style.transform = "scale(1) rotate(0deg)";
             }, 100);
+
+            // 【新ギミック】タップされたら、隠れてる写真と説明文をパッと表示する
+            if (infoSection) {
+                infoSection.style.display = "block";
+                
+                // ★【ここにお引越し！】写真と説明が表示された瞬間に、初めて500pxの余白を作る！
+                document.body.style.paddingBottom = "500px";
+            }
         });
     }
 
@@ -87,8 +96,4 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 3000);
         });
     }
-
-    // === 【おくら流新機能】スクロールできる範囲を長くする ===
-    // ページの一番下に500pxの透明な余白を自動で作る
-    document.body.style.paddingBottom = "500px";
 });
