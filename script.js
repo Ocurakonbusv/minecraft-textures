@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("msgIndex", nextIndex);
     }
 
-    // --- 要素2：アイコンタップで剣を振る音＆アニメーション ＋ 写真・説明の【開閉】機能 ---
+    // --- 要素2：アイコンタップで剣を振る音＆アニメーション ＋ 写真・説明の【確実な開閉】 ---
     const icon = document.getElementById("pack-icon");
     const infoSection = document.getElementById("pack-info-section");
     
@@ -56,16 +56,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 icon.style.transform = "scale(1) rotate(0deg)";
             }, 100);
 
-            // 💡【ここをスマートに修正！】開いてたら閉じる、閉じてたら開く
+            // 💡【最強の開閉システムに変更】
             if (infoSection) {
-                if (infoSection.style.display === "none" || infoSection.style.display === "") {
-                    // 閉じてる時は開く
+                // 今の表示状態をちゃんとブラウザに確認させる（これならインラインCSSでもバグらん！）
+                const isHidden = window.getComputedStyle(infoSection).display === "none";
+
+                if (isHidden) {
+                    // 隠れてるなら、開く！
                     infoSection.style.display = "block";
-                    document.body.style.paddingBottom = "500px"; // 開いたから余白を作る
+                    document.body.style.paddingBottom = "500px"; // 余白を作る
                 } else {
-                    // 開いてる時は閉じる
+                    // 見えてるなら、閉じる！
                     infoSection.style.display = "none";
-                    document.body.style.paddingBottom = "0px"; // 閉じたから余白を元に戻す
+                    document.body.style.paddingBottom = "0px"; // 余白を消す
                 }
             }
         });
