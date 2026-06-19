@@ -1,7 +1,7 @@
 body{
     margin:0;
     min-height:100vh;
-    background-image:url("background.jpeg");
+    background-image:url("E13EB351-1BB0-434F-B3B1-25465B88B5E0.png");
     background-size:cover;
     background-position:center;
     color:white;
@@ -22,20 +22,52 @@ h1{
     text-shadow:0 0 15px #66d9ff;
 }
 
+header p{
+    color:#ddd;
+    margin-top:10px;
+    font-size:1.2rem;
+}
+
 .card{
     margin-top:100px;
-    background:rgba(0,0,0,.5);
+    background:rgba(0,0,0,0.5);
+    backdrop-filter:blur(10px);
     padding:40px;
     border-radius:20px;
     text-align:center;
     border:2px solid #66d9ff;
+    width:90%;
+    max-width:500px;
+}
+
+h2{
+    color:#66d9ff;
+    margin-bottom:20px;
 }
 
 .download-btn{
     display:inline-block;
+    margin-top:20px;
     padding:15px 40px;
     background:#66d9ff;
     color:black;
     text-decoration:none;
     border-radius:10px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.download-btn:hover{
+    box-shadow:0 0 20px #66d9ff;
+}
+
+.hidden{
+    opacity:0;
+    transform:translateY(50px);
+    transition:1s;
+}
+
+.show{
+    opacity:1;
+    transform:translateY(0);
 }
