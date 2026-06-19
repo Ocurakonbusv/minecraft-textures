@@ -15,7 +15,7 @@ document.querySelectorAll(".hidden").forEach(el => {
 // === 追加したおもしろギミック ===
 document.addEventListener("DOMContentLoaded", () => {
 
-    // --- 要素1：一言メッセージ（順番に切り替える仕組み） ---
+    // --- 要素1：一言メッセージ（順番に切り替える仕組み ＆ 位置自動調整） ---
     const messages = [
         "水色ベースのテクスチャです！",
         "制作期間は約1ヶ月です！",
@@ -34,6 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // メッセージを表示
         msgElement.innerText = messages[currentIndex];
+
+        // 【ここを追加！】アイコンの真上にきれいな吹き出しとして配置されるようにCSSを自動適用
+        msgElement.style.display = "block";
+        msgElement.style.margin = "0 auto 25px auto";
+        msgElement.style.width = "fit-content";
 
         // 次回のために、番号を1つ進めてブラウザに保存する
         let nextIndex = (currentIndex + 1) % messages.length;
