@@ -1,4 +1,4 @@
-// === 元のふわっと浮き出るアニメーション  ===
+// === 元のふわっと浮き出るアニメーション ===
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if(entry.isIntersecting){
@@ -12,34 +12,50 @@ document.querySelectorAll(".hidden").forEach(el => {
 });
 
 
-// === 🎮 ここから新しく追加したおもしろギミック ===
+// === 追加したおもしろギミック ===
 document.addEventListener("DOMContentLoaded", () => {
 
-    // --- 💬 要素1：ランダムひとことメッセージ ---
+    // --- 要素1：一言メッセージ（順番に切り替える仕組み） ---
     const messages = [
-        "今回のテクスチャ、自信作なので是非使ってください！",
-        "PvPで勝ったら動画のコメントで教えてね！",
-        "ダウンロードしたらチャンネル登録もよろしくね！",
-        "このメッセージが見えた人は今日ラッキーかも！？",
-        "Azure 16xで勝率アップ間違いなし！"
+        "水色ベースのテクスチャです！",
+        "制作期間は約1ヶ月です！",
+        "1000人記念の配布テクスチャです！"
     ];
     const msgElement = document.getElementById("random-msg");
+    
     if (msgElement) {
-        const randomText = messages[Math.floor(Math.random() * messages.length)];
-        msgElement.innerText = randomText;
+        // ブラウザに保存されている「前回の番号」を読み込む（最初は0）
+        let currentIndex = parseInt(localStorage.getItem("msgIndex")) || 0;
+        
+        // 範囲外になっていないかチェック（念のため）
+        if (currentIndex >= messages.length) {
+            currentIndex = 0;
+        }
+
+        // メッセージを表示
+        msgElement.innerText = messages[currentIndex];
+
+        // 次回のために、番号を1つ進めてブラウザに保存する
+        let nextIndex = (currentIndex + 1) % messages.length;
+        localStorage.setItem("msgIndex", nextIndex);
     }
 
-    // --- ⚔️ 要素2：アイコンタップで剣を振る音＆アニメーション ---
+    // --- 要素2：アイコンタップで剣を振る音＆アニメーション（遅延対策・連打可能版） ---
     const icon = document.getElementById("pack-icon");
     
-    // アップロードする自分の音ファイル（sound.mp3）に変更した。
+    // 音ファイルをあらかじめ読み込んで準備（プリロード）しておく
     const audio = new Audio("sound.mp3"); 
+    audio.preload = "auto"; 
     audio.volume = 0.5; // 音量調整
 
     if (icon) {
         icon.addEventListener("click", () => {
+            // タップされた瞬間に音の再生位置を最初に戻して爆速再生
             audio.currentTime = 0;
-            audio.play();
+            audio.play().catch(error => {
+                console.log("初期タップ前の制限解除待ち:", error);
+            });
+
             // アイコンを一瞬だけシュッと傾ける
             icon.style.transform = "scale(0.9) rotate(-15deg)";
             setTimeout(() => {
@@ -48,8 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- 📥 要素3：ボタンを押したら「Downloading...」に切り替える ---
-    const downloadBtn = document.getElementById("download-btn");
+    // --- 要素3：ボタンを押したら「Downloading...」に切り替える ---
+    const downloadBtn = document.querySelector(".download-btn");
     if (downloadBtn) {
         downloadBtn.addEventListener("click", () => {
             downloadBtn.innerText = "Downloading...";
@@ -67,4 +83,3 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-
