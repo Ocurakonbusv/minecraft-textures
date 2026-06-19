@@ -17,11 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- 💬 要素1：ランダムひとことメッセージ ---
     const messages = [
-        "今回のテクスチャ、自信作やから使ってみてな！",
-        "PvPで勝ったら動画のコメントで教えてや！",
-        "DLしたらチャンネル登録もよろしくな！",
+        "今回のテクスチャ、自信作なので是非使ってください！",
+        "PvPで勝ったら動画のコメントで教えてね！",
+        "ダウンロードしたらチャンネル登録もよろしくね！",
         "このメッセージが見えた人は今日ラッキーかも！？",
-        "Azure 16xで勝率アップ間違いなしや！"
+        "Azure 16xで勝率アップ間違いなし！"
     ];
     const msgElement = document.getElementById("random-msg");
     if (msgElement) {
