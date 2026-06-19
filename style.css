@@ -1,7 +1,7 @@
 Body{
     margin:0;
     min-height:100vh;
-    /* 背景画像を新しい名前「background.png」に修正したで！ */
+    /* 背景画像を新しい名前「background.png」に修正した。 */
     background-image:url("background.png");
     background-size:cover;
     background-position:center;
@@ -24,7 +24,7 @@ h1{
     text-shadow:0 0 15px #66d9ff;
 }
 
-/* ② サブタイトル（2段階大きくしたで！） */
+/* ② サブタイトル（2段階大きく！） */
 header p{
     color:#ddd;
     margin-top:10px;
