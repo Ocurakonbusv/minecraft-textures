@@ -56,19 +56,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 icon.style.transform = "scale(1) rotate(0deg)";
             }, 100);
 
-            // 💡【最強の開閉システムに変更】
+            // リアルタイムの表示状態を確認して確実に開閉
             if (infoSection) {
-                // 今の表示状態をちゃんとブラウザに確認させる（これならインラインCSSでもバグらん！）
                 const isHidden = window.getComputedStyle(infoSection).display === "none";
 
                 if (isHidden) {
-                    // 隠れてるなら、開く！
                     infoSection.style.display = "block";
-                    document.body.style.paddingBottom = "500px"; // 余白を作る
+                    document.body.style.paddingBottom = "500px"; // 開いたら余白を作る
                 } else {
-                    // 見えてるなら、閉じる！
                     infoSection.style.display = "none";
-                    document.body.style.paddingBottom = "0px"; // 余白を消す
+                    document.body.style.paddingBottom = "0px"; // 閉じたら余白を消す
                 }
             }
         });
