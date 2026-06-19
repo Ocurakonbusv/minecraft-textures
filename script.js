@@ -1,4 +1,4 @@
-// === ✨ 元のふわっと浮き出るアニメーション（おくらのコード） ===
+// === 元のふわっと浮き出るアニメーション  ===
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if(entry.isIntersecting){
@@ -31,7 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- ⚔️ 要素2：アイコンタップで剣を振る音＆アニメーション ---
     const icon = document.getElementById("pack-icon");
-    const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2763/2763-84.wav"); 
+    
+    // アップロードする自分の音ファイル（sound.mp3）に変更した。
+    const audio = new Audio("sound.mp3"); 
     audio.volume = 0.5; // 音量調整
 
     if (icon) {
@@ -65,3 +67,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
