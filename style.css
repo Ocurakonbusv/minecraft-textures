@@ -1,4 +1,4 @@
-body{
+Body{
     margin:0;
     min-height:100vh;
     background-image:url("E13EB351-1BB0-434F-B3B1-25465B88B5E0.png");
@@ -16,16 +16,18 @@ header{
     margin-top:80px;
 }
 
+/* ① 大タイトル（元のデカくて光るカッコいいサイズのまま） */
 h1{
     color:#66d9ff;
     font-size:4rem;
     text-shadow:0 0 15px #66d9ff;
 }
 
+/* ② サブタイトル（1.2rem から 1.8rem に2段階大きくしたで！） */
 header p{
     color:#ddd;
     margin-top:10px;
-    font-size:1.2rem;
+    font-size:1.8rem;
 }
 
 .card{
@@ -40,20 +42,24 @@ header p{
     max-width:500px;
 }
 
+/* ③ テクスチャ名 Azure 16x（元のサイズから 2.2rem に2段階デカく！） */
 h2{
     color:#66d9ff;
     margin-bottom:20px;
+    font-size:2.2rem;
 }
 
+/* ④ Downloadボタン（文字を 1.5rem にして、ボタン自体も一回り大きく押しやすく！） */
 .download-btn{
     display:inline-block;
     margin-top:20px;
-    padding:15px 40px;
+    padding:20px 50px; /* ボタンの余白を広げてデカくした */
     background:#66d9ff;
     color:black;
     text-decoration:none;
     border-radius:10px;
     font-weight:bold;
+    font-size:1.5rem;   /* 文字を2段階大きく */
     transition:0.3s;
 }
 
