@@ -96,48 +96,56 @@ document.addEventListener("DOMContentLoaded", () => {
     if (soonLockBtn) soonLockBtn.addEventListener("click", toggleSoonSection);
 
 
-    // --- ⑤ ダウンロードボタンの切り替え（★3秒後カウント＆1人1回制限！） ---
+    // --- ⑤ ダウンロードボタンの切り替え（★マイクラ風実績解除を追加！） ---
     const downloadBtn = document.getElementById("download-btn");
-    const dlCount = document.getElementById("dl-count"); // HTMLの数字部分を見つける
-
     if (downloadBtn) {
         downloadBtn.addEventListener("click", () => {
-            // 連打対策：すでに「Downloading...」の時は何もしない
+            // 連打したときにポップアップが無限に増えるのを防ぐ
             if (downloadBtn.innerText === "Downloading...") return;
 
-            // まずボタンをねずみ色にして待機状態にする
             downloadBtn.innerText = "Downloading...";
-            downloadBtn.style.backgroundColor = "#444"; 
-            downloadBtn.style.color = "#888";            
+            downloadBtn.style.backgroundColor = "#444"; // ここでねずみ色にする！
+            downloadBtn.style.color = "#888";            // 文字を暗いグレーにする！
             downloadBtn.style.boxShadow = "none";
 
-            // ★3秒のカウントダウンが始まったあと、終わる瞬間に判定する！
+            // 🛠️ 実績解除の枠をHTMLに新しく作り出す
+            const toast = document.createElement("div");
+            toast.className = "minecraft-toast";
+            toast.innerHTML = `
+                <div class="toast-icon"></div>
+                <div class="toast-text">
+                    <p class="toast-title">チャレンジ完了！</p>
+                    <p class="toast-desc">Azure 16x を入手</p>
+                </div>
+            `;
+            document.body.appendChild(toast);
+
+            // 0.1秒後に右からシュッと画面内にスライドさせる
             setTimeout(() => {
-                // ブラウザの記憶部屋を確認
-                const hasDownloaded = localStorage.getItem("azure_downloaded");
+                toast.classList.add("show-toast");
+            }, 100);
 
-                // まだダウンロードした記録がなくて、数字の要素があれば「初めてのダウンロード」としてカウント！
-                if (!hasDownloaded && dlCount) {
-                    let currentCount = parseInt(dlCount.innerText) || 0;
-                    dlCount.innerText = currentCount + 1; // 数字を増やす
-                    
-                    // 「この人はもうダウンロードしたで」という証拠を保存
-                    localStorage.setItem("azure_downloaded", "true");
-                }
+            // 4秒経ったら画面の外へ引っ込めて、用済みの枠を消去する
+            setTimeout(() => {
+                toast.classList.remove("show-toast");
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
 
-                // 3秒経ったらボタンの見た目を元のテーマカラーに戻す
+            // 3秒後にダウンロードボタンの見た目を戻す設定（お前のコードのまま）
+            setTimeout(() => {
                 downloadBtn.innerText = "Download";
                 const isLight = document.documentElement.classList.contains("light-mode");
                 downloadBtn.style.backgroundColor = isLight ? "#ff9933" : "#66d9ff";
                 downloadBtn.style.color = "black";
                 downloadBtn.style.boxShadow = "";
-            }, 3000); // 3秒（3000ミリ秒）待つ
+            }, 3000);
         });
     }
 
     // --- ☀️ 朝と夜になるテーマ切り替え機能 ---
     const themeToggle = document.getElementById("theme-toggle");
     if (themeToggle) {
+        themeToggle.documentElement = document.documentElement; // 判定用
         themeToggle.addEventListener("click", () => {
             document.documentElement.classList.toggle("light-mode");
             const isLight = document.documentElement.classList.contains("light-mode");
