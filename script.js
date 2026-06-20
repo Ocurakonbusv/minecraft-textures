@@ -34,13 +34,16 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("msgIndex", nextIndex);
     }
 
-    // --- 🎵 チェスト開閉音（sound1 / sound2）の準備 ---
+    // --- 🎵 効果音（sound1 / sound2 / sound3）の準備 ---
     const openAudio = new Audio("sound1.mp3");   // チェスト開く音
     const closeAudio = new Audio("sound2.mp3"); // チェスト閉じる音
+    const toastAudio = new Audio("sound3.mp3"); // ★実績解除の音
     openAudio.preload = "auto";
     closeAudio.preload = "auto";
+    toastAudio.preload = "auto";
     openAudio.volume = 0.5;
     closeAudio.volume = 0.5;
+    toastAudio.volume = 0.5; // 音量はここで調整してな！
 
 
     // --- ③ 1つ目のカード（Azure 16x）の開閉＆スクロール区域の延長 ---
@@ -51,6 +54,10 @@ document.addEventListener("DOMContentLoaded", () => {
         icon.addEventListener("click", () => {
             icon.style.transform = "scale(0.9) rotate(-15deg)";
             setTimeout(() => icon.style.transform = "scale(1) rotate(0deg)", 100);
+
+            // スマホの音バグ対策で事前にロードを挟む
+            openAudio.load();
+            closeAudio.load();
 
             if (infoSection) {
                 const isHidden = window.getComputedStyle(infoSection).display === "none";
@@ -85,6 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => soonTrigger.style.transform = "scale(1)", 100);
         }
 
+        // スマホの音バグ対策
+        openAudio.load();
+        closeAudio.load();
+
         if (soonInfoSection) {
             const isHidden = window.getComputedStyle(soonInfoSection).display === "none";
             if (isHidden) {
@@ -109,11 +120,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (soonLockBtn) soonLockBtn.addEventListener("click", toggleSoonSection);
 
 
-    // --- ⑤ ダウンロードボタンの切り替え（マイクラ風実績解除つき！） ---
+    // --- ⑤ ダウンロードボタンの切り替え（★実績音sound3＆タイミング調整版！） ---
     const downloadBtn = document.getElementById("download-btn");
     if (downloadBtn) {
         downloadBtn.addEventListener("click", () => {
             if (downloadBtn.innerText === "Downloading...") return;
+
+            // スマホ音対策
+            toastAudio.load();
 
             downloadBtn.innerText = "Downloading...";
             downloadBtn.style.backgroundColor = "#444"; 
@@ -132,10 +146,14 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             document.body.appendChild(toast);
 
-            // 0.1秒後に右からシュッと画面内にスライドさせる
+            // ⏱️ タイミング調整：ボタンを押した瞬間に音を鳴らして画面内に滑り込ませる！
+            toastAudio.currentTime = 0;
+            toastAudio.play().catch(e => console.log("音再生エラー:", e));
+            
+            // ほぼ同時に右からシュッと出す（10ミリ秒後）
             setTimeout(() => {
                 toast.classList.add("show-toast");
-            }, 100);
+            }, 10);
 
             // 4秒経ったら画面の外へ引っ込めて、用済みの枠を消去する
             setTimeout(() => {
