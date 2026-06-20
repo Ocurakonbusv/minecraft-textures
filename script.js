@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 画面内の「hidden」がついたカードを全部見張る
     document.querySelectorAll(".hidden").forEach(el => {
         observer.observe(el);
     });
@@ -42,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     audio.volume = 0.5;
 
 
-    // --- ③ 1つ目のカード（Azure 16x）の開閉＆【余白を絶対に増やす処理】 ---
+    // --- ③ 1つ目のカード（Azure 16x）の開閉 ---
     const icon = document.getElementById("pack-icon");
     const infoSection = document.getElementById("pack-info-section");
 
@@ -55,14 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => icon.style.transform = "scale(1) rotate(0deg)", 100);
 
             if (infoSection) {
-                // 現在非表示（none）かどうかをチェック
                 if (infoSection.style.display === "none" || infoSection.style.display === "") {
                     infoSection.style.display = "block";
-                    // 💡 開いたら画面の一番下に500pxの特大のスクロール区域を強制追加！
                     document.body.style.setProperty("padding-bottom", "500px", "important");
                 } else {
                     infoSection.style.display = "none";
-                    // 閉じたら元に戻す
                     document.body.style.setProperty("padding-bottom", "100px", "important");
                 }
             }
@@ -70,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // --- ④ 2つ目のカード（Coming Soon）の開閉＆【余白を絶対に増やす処理】 ---
+    // --- ④ 2つ目のカード（Coming Soon）の開閉 ---
     const soonTrigger = document.getElementById("soon-trigger");
     const soonLockBtn = document.getElementById("soon-lock-btn");
     const soonInfoSection = document.getElementById("soon-info-section");
@@ -85,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (soonInfoSection) {
             if (soonInfoSection.style.display === "none" || soonInfoSection.style.display === "") {
                 soonInfoSection.style.display = "block";
-                // 💡 こっちが開いた時も500pxのスクロール区域を強制追加！
                 document.body.style.setProperty("padding-bottom", "500px", "important");
             } else {
                 soonInfoSection.style.display = "none";
@@ -98,10 +93,29 @@ document.addEventListener("DOMContentLoaded", () => {
     if (soonLockBtn) soonLockBtn.addEventListener("click", toggleSoonSection);
 
 
-    // --- ⑤ ダウンロードボタンの切り替え ---
+    // === 📊 ⑤ ダウンロードカウンターの制御（重複防止ロック付き） ===
     const downloadBtn = document.getElementById("download-btn");
+    const dlCountEl = document.getElementById("dl-count");
+    
+    let baseVotes = 1234; // 表示用の初期値カウント
+    let hasDownloaded = localStorage.getItem("hasDownloadedAzure") === "true";
+
+    // 過去に一回でも押してたら最初から+1された状態をキープ
+    if (hasDownloaded) {
+        dlCountEl.innerText = baseVotes + 1;
+    } else {
+        dlCountEl.innerText = baseVotes;
+    }
+
     if (downloadBtn) {
         downloadBtn.addEventListener("click", () => {
+            // まだ一度も押してへん時だけ数字を増やす（重複ガード）
+            if (!hasDownloaded) {
+                hasDownloaded = true;
+                localStorage.setItem("hasDownloadedAzure", "true"); // ブラウザにダウンロード済みの印をセーブ
+                dlCountEl.innerText = baseVotes + 1;
+            }
+
             downloadBtn.innerText = "Downloading...";
             downloadBtn.style.backgroundColor = "#444";
             downloadBtn.style.color = "#888";
@@ -109,10 +123,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
             setTimeout(() => {
                 downloadBtn.innerText = "Download";
-                downloadBtn.style.backgroundColor = "#66d9ff";
+                downloadBtn.style.backgroundColor = "var(--main-color)";
                 downloadBtn.style.color = "black";
                 downloadBtn.style.boxShadow = "";
             }, 3000);
+        });
+    }
+
+
+    // === 🌓 ⑥ 昼と夜の切り替え（ダーク・ライトモード）システム ===
+    const themeToggle = document.getElementById("theme-toggle");
+    const currentTheme = localStorage.getItem("theme") || "dark";
+
+    // 保存されてる前回のテーマをページを開いた時に適用
+    if (currentTheme === "light") {
+        document.documentElement.classList.add("light-mode");
+        if (themeToggle) themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+            document.documentElement.classList.toggle("light-mode");
+            
+            let theme = "dark";
+            if (document.documentElement.classList.contains("light-mode")) {
+                theme = "light";
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>'; // 太陽マーク
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>'; // 月マーク
+            }
+            
+            localStorage.setItem("theme", theme); // 設定をブラウザに記憶
         });
     }
 });
