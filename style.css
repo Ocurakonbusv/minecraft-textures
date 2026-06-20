@@ -16,8 +16,9 @@
 
 body {
     background-image: url("background.png");
-    background-size: cover;
-    background-position: center;
+    background-repeat: repeat-x;                /* 横方向に無限ループさせる */
+    background-size: auto 100%;                 /* 縦幅を画面にフィットさせて横に流す */
+    background-position: 0 0;
     background-attachment: fixed;
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -26,6 +27,14 @@ body {
     margin: 0;
     padding: 20px;
     transition: background-color 0.4s, color 0.4s;
+    /* 👇 35秒かけて背景画像をループ移動させる（数字を小さくすると速くなるで） */
+    animation: scrollBackground 35s linear infinite;
+}
+
+/* 🎬 おくらの画像（横幅2400px）が完全に繋がって無限ループするアニメーション */
+@keyframes scrollBackground {
+    0% { background-position: 0 0; }
+    100% { background-position: -2400px 0; } /* 👈 2400px移動した瞬間に最初の位置にピタッと戻る */
 }
 
 header { margin-top: 60px; }
@@ -71,81 +80,3 @@ h1 { color: var(--main-color); font-size: 2.5rem; text-shadow: 0 0 10px var(--sh
     font-weight: bold;
     margin-top: 20px;
     transition: 0.3s;
-    border: none;
-    cursor: pointer;
-}
-
-.download-btn:hover {
-    box-shadow: 0 0 15px var(--shadow-color);
-}
-
-.theme-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: var(--card-bg);
-    border: 2px solid var(--main-color);
-    color: var(--main-color);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    z-index: 1000;
-    transition: 0.3s;
-}
-
-/* 🎮 マイクラ風：実績解除ポップアップのスタイル */
-.minecraft-toast {
-    position: fixed;
-    top: 20px;
-    right: -320px; /* 最初は画面の右外に隠しておく */
-    width: 280px;
-    background: #222;
-    border: 3px solid #444;
-    border-radius: 4px;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    z-index: 9999;
-    transition: right 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* シャキッと出てくるマイクラ特有の動き */
-}
-
-/* ポップアップが画面内に滑り込んでくる時用のクラス */
-.minecraft-toast.show-toast {
-    right: 20px;
-}
-
-/* 実績のアイコン枠（水色のテーマカラーと連動） */
-.toast-icon {
-    width: 32px;
-    height: 32px;
-    background: var(--main-color);
-    border-radius: 4px;
-    margin-right: 12px;
-    box-shadow: 0 0 8px var(--shadow-color);
-    transition: background 0.4s;
-}
-
-.toast-text {
-    text-align: left;
-}
-
-/* 「チャレンジ完了！」の黄色い文字 */
-.toast-title {
-    color: #ffff55;
-    font-weight: bold;
-    font-size: 0.9rem;
-    margin: 0;
-    text-shadow: 1px 1px 0px #333300;
-}
-
-/* 実績の内容テキスト */
-.toast-desc {
-    color: #ffffff;
-    font-size: 0.85rem;
-    margin: 3px 0 0 0;
-    text-shadow: 1px 1px 0px #222;
-}
-
