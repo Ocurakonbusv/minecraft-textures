@@ -16,21 +16,30 @@
 </header>
 
 <div class="main-container">
-    <div class="card">
+    <div class="card hidden">
         <h2>Azure 16x</h2>
-        <img src="icon.png" alt="Icon" id="pack-icon" style="width: 100px; height: 100px; border-radius: 10px; cursor: pointer;">
-        <p id="random-msg" style="color: #66d9ff; font-weight: bold; margin: 15px 0;">水色ベースのテクスチャです！</p>
+        <div class="icon-container">
+            <img src="icon.png" alt="Icon" id="pack-icon">
+            <div id="random-msg" class="speech-bubble"></div>
+        </div>
         
         <div class="download-counter">
             <i class="fas fa-download"></i> <span id="dl-count">3</span> Downloads
         </div>
 
-        <div id="pack-info-section" style="display: none; margin-top: 20px; text-align: left; font-size: 0.9rem; color: #ccc;">
-            <p>Azure16xというテクスチャです。水色がベースのテクスチャで、1000人記念で配布しました。</p>
-            <p>UIなどは見やすく調整し、装備やその他ツール類なども頑張ったので是非使ってほしいです！</p>
+        <div id="pack-info-section" class="info-section">
+            <img src="screenshot1.png" alt="Screenshot" class="screenshot">
+            <img src="screenshot2.png" alt="Screenshot" class="screenshot">
+            <p>Azure16xというテクスチャです。水色がベースのテクスチャで、1000人記念で配布しました。<br>UIなどは見やすく調整し、装備やその他ツール類なども頑張ったので是非使ってほしいです！</p>
         </div>
         
         <a href="Azure_16x.mcpack" download class="download-btn" id="download-btn">Download</a>
+    </div>
+
+    <div class="card hidden" style="border: 2px dashed #444;">
+        <h2>Next Texture</h2>
+        <p><i class="fas fa-lock"></i> Coming Soon...</p>
+        <button class="download-btn" style="background:#333; cursor:not-allowed;">Locked</button>
     </div>
 </div>
 
