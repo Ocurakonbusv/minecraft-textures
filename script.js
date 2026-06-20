@@ -187,3 +187,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+// === 🔒 Coming Soon カードをタップした時に鍵をガタガタ震わせる後付けシステム ===
+document.addEventListener("DOMContentLoaded", () => {
+    const soonTrigger = document.getElementById("soon-trigger");
+    const soonLockBtn = document.getElementById("soon-lock-btn");
+
+    const triggerShake = () => {
+        if (soonLockBtn) {
+            // 震えるクラスをつける
+            soonLockBtn.classList.add("shake-animation");
+            // 0.3秒後にクラスを外して、次また押した時に震えるようにする
+            setTimeout(() => {
+                soonLockBtn.classList.remove("shake-animation");
+            }, 300);
+        }
+    };
+
+    // カード全体、またはカギボタンが押されたらガタガタ発動！
+    if (soonTrigger) soonTrigger.addEventListener("click", triggerShake);
+    if (soonLockBtn) soonLockBtn.addEventListener("click", triggerShake);
+});
