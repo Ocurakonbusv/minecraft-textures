@@ -34,10 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("msgIndex", nextIndex);
     }
 
-    // --- 🎵 剣を振る音（sound.mp3）の準備 ---
-    const audio = new Audio("sound.mp3"); 
-    audio.preload = "auto"; 
-    audio.volume = 0.5;
+    // --- 🎵 チェスト開閉音（sound1 / sound2）の準備 ---
+    const openAudio = new Audio("sound1.mp3");   // チェスト開く音
+    const closeAudio = new Audio("sound2.mp3"); // チェスト閉じる音
+    openAudio.preload = "auto";
+    closeAudio.preload = "auto";
+    openAudio.volume = 0.5;
+    closeAudio.volume = 0.5;
 
 
     // --- ③ 1つ目のカード（Azure 16x）の開閉＆スクロール区域の延長 ---
@@ -46,18 +49,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (icon) {
         icon.addEventListener("click", () => {
-            audio.currentTime = 0;
-            audio.play().catch(e => console.log("音再生エラー:", e));
-
             icon.style.transform = "scale(0.9) rotate(-15deg)";
             setTimeout(() => icon.style.transform = "scale(1) rotate(0deg)", 100);
 
             if (infoSection) {
                 const isHidden = window.getComputedStyle(infoSection).display === "none";
                 if (isHidden) {
+                    // 👉 開く時：sound1.mp3（チェスト開）を鳴らす
+                    openAudio.currentTime = 0;
+                    openAudio.play().catch(e => console.log("音再生エラー:", e));
+                    
                     infoSection.style.display = "block";
                     document.body.style.paddingBottom = "500px";
                 } else {
+                    // 👉 閉じる時：sound2.mp3（チェスト閉）を鳴らす
+                    closeAudio.currentTime = 0;
+                    closeAudio.play().catch(e => console.log("音再生エラー:", e));
+                    
                     infoSection.style.display = "none";
                     document.body.style.paddingBottom = "0px";
                 }
@@ -72,9 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const soonInfoSection = document.getElementById("soon-info-section");
 
     const toggleSoonSection = () => {
-        audio.currentTime = 0;
-        audio.play().catch(e => console.log("音再生エラー:", e));
-
         if (soonTrigger) {
             soonTrigger.style.transform = "scale(0.95)";
             setTimeout(() => soonTrigger.style.transform = "scale(1)", 100);
@@ -83,9 +88,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (soonInfoSection) {
             const isHidden = window.getComputedStyle(soonInfoSection).display === "none";
             if (isHidden) {
+                // 👉 開く時：sound1.mp3（チェスト開）を鳴らす
+                openAudio.currentTime = 0;
+                openAudio.play().catch(e => console.log("音再生エラー:", e));
+                
                 soonInfoSection.style.display = "block";
                 document.body.style.paddingBottom = "500px";
             } else {
+                // 👉 閉じる時：sound2.mp3（チェスト閉）を鳴らす
+                closeAudio.currentTime = 0;
+                closeAudio.play().catch(e => console.log("音再生エラー:", e));
+                
                 soonInfoSection.style.display = "none";
                 document.body.style.paddingBottom = "0px";
             }
@@ -96,16 +109,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (soonLockBtn) soonLockBtn.addEventListener("click", toggleSoonSection);
 
 
-    // --- ⑤ ダウンロードボタンの切り替え（★マイクラ風実績解除を追加！） ---
+    // --- ⑤ ダウンロードボタンの切り替え（マイクラ風実績解除つき！） ---
     const downloadBtn = document.getElementById("download-btn");
     if (downloadBtn) {
         downloadBtn.addEventListener("click", () => {
-            // 連打したときにポップアップが無限に増えるのを防ぐ
             if (downloadBtn.innerText === "Downloading...") return;
 
             downloadBtn.innerText = "Downloading...";
-            downloadBtn.style.backgroundColor = "#444"; // ここでねずみ色にする！
-            downloadBtn.style.color = "#888";            // 文字を暗いグレーにする！
+            downloadBtn.style.backgroundColor = "#444"; 
+            downloadBtn.style.color = "#888";            
             downloadBtn.style.boxShadow = "none";
 
             // 🛠️ 実績解除の枠をHTMLに新しく作り出す
@@ -131,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(() => toast.remove(), 500);
             }, 4000);
 
-            // 3秒後にダウンロードボタンの見た目を戻す設定（お前のコードのまま）
+            // 3秒後にダウンロードボタンの見た目を戻す設定
             setTimeout(() => {
                 downloadBtn.innerText = "Download";
                 const isLight = document.documentElement.classList.contains("light-mode");
@@ -145,13 +157,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- ☀️ 朝と夜になるテーマ切り替え機能 ---
     const themeToggle = document.getElementById("theme-toggle");
     if (themeToggle) {
-        themeToggle.documentElement = document.documentElement; // 判定用
+        themeToggle.documentElement = document.documentElement; 
         themeToggle.addEventListener("click", () => {
             document.documentElement.classList.toggle("light-mode");
             const isLight = document.documentElement.classList.contains("light-mode");
             themeToggle.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
             
-            // もしダウンロード中じゃなければ、ボタンの色もテーマに合わせる
             if (downloadBtn && downloadBtn.innerText !== "Downloading...") {
                 downloadBtn.style.backgroundColor = isLight ? "#ff9933" : "#66d9ff";
             }
