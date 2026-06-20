@@ -1,8 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
-    // === 🎮 ① 各種ギミックシステム ===
-
-    // --- 一言メッセージのランダム切り替え ---
     const messages = [
         "水色ベースのテクスチャです！",
         "制作期間は約1ヶ月です！",
@@ -21,13 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("msgIndex", nextIndex);
     }
 
-    // --- 🎵 音（sound.mp3）の準備 ---
     const audio = new Audio("sound.mp3"); 
     audio.preload = "auto"; 
     audio.volume = 0.5;
 
-
-    // --- ② 1つ目のカード（Azure 16x）の開閉 ---
     const icon = document.getElementById("pack-icon");
     const infoSection = document.getElementById("pack-info-section");
 
@@ -51,8 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
-    // --- ③ 2つ目のカード（Coming Soon）の開閉 ---
     const soonTrigger = document.getElementById("soon-trigger");
     const soonLockBtn = document.getElementById("soon-lock-btn");
     const soonInfoSection = document.getElementById("soon-info-section");
@@ -78,12 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (soonTrigger) soonTrigger.addEventListener("click", toggleSoonSection);
     if (soonLockBtn) soonLockBtn.addEventListener("click", toggleSoonSection);
 
-
-    // === 📊 ④ ダウンロードカウンターの制御 ===
     const downloadBtn = document.getElementById("download-btn");
     const dlCountEl = document.getElementById("dl-count");
     
-    let baseVotes = 1234;
+    // 💡 ここのベースの数字を「3」にしたで！
+    let baseVotes = 3;
     let hasDownloaded = localStorage.getItem("hasDownloadedAzure") === "true";
 
     if (hasDownloaded) {
@@ -114,8 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
-    // === 🌓 ⑤ 昼と夜の切り替えシステム ===
     const themeToggle = document.getElementById("theme-toggle");
     const currentTheme = localStorage.getItem("theme") || "dark";
 
