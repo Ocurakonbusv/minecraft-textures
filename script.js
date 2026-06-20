@@ -93,14 +93,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (soonLockBtn) soonLockBtn.addEventListener("click", toggleSoonSection);
 
 
-    // === 📊 ⑤ ダウンロードカウンターの制御（重複防止ロック付き） ===
+    // === 📊 ⑤ ダウンロードカウンターの制御 ===
     const downloadBtn = document.getElementById("download-btn");
     const dlCountEl = document.getElementById("dl-count");
     
-    let baseVotes = 1234; // 表示用の初期値カウント
+    let baseVotes = 1234;
     let hasDownloaded = localStorage.getItem("hasDownloadedAzure") === "true";
 
-    // 過去に一回でも押してたら最初から+1された状態をキープ
     if (hasDownloaded) {
         dlCountEl.innerText = baseVotes + 1;
     } else {
@@ -109,10 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (downloadBtn) {
         downloadBtn.addEventListener("click", () => {
-            // まだ一度も押してへん時だけ数字を増やす（重複ガード）
             if (!hasDownloaded) {
                 hasDownloaded = true;
-                localStorage.setItem("hasDownloadedAzure", "true"); // ブラウザにダウンロード済みの印をセーブ
+                localStorage.setItem("hasDownloadedAzure", "true");
                 dlCountEl.innerText = baseVotes + 1;
             }
 
@@ -131,11 +129,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // === 🌓 ⑥ 昼と夜の切り替え（ダーク・ライトモード）システム ===
+    // === 🌓 ⑥ 昼と夜の切り替えシステム ===
     const themeToggle = document.getElementById("theme-toggle");
     const currentTheme = localStorage.getItem("theme") || "dark";
 
-    // 保存されてる前回のテーマをページを開いた時に適用
     if (currentTheme === "light") {
         document.documentElement.classList.add("light-mode");
         if (themeToggle) themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
@@ -148,12 +145,12 @@ document.addEventListener("DOMContentLoaded", () => {
             let theme = "dark";
             if (document.documentElement.classList.contains("light-mode")) {
                 theme = "light";
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>'; // 太陽マーク
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             } else {
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>'; // 月マーク
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
             }
             
-            localStorage.setItem("theme", theme); // 設定をブラウザに記憶
+            localStorage.setItem("theme", theme);
         });
     }
 });
