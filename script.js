@@ -96,31 +96,42 @@ document.addEventListener("DOMContentLoaded", () => {
     if (soonLockBtn) soonLockBtn.addEventListener("click", toggleSoonSection);
 
 
-    // --- ⑤ ダウンロードボタンの切り替え（★カウントアップ追加！） ---
+    // --- ⑤ ダウンロードボタンの切り替え（★3秒後カウント＆1人1回制限！） ---
     const downloadBtn = document.getElementById("download-btn");
     const dlCount = document.getElementById("dl-count"); // HTMLの数字部分を見つける
 
     if (downloadBtn) {
         downloadBtn.addEventListener("click", () => {
-            // 連打対策：ボタンが「Download」状態の時だけ数字を増やす
-            if (dlCount && downloadBtn.innerText === "Download") {
-                let currentCount = parseInt(dlCount.innerText) || 0;
-                dlCount.innerText = currentCount + 1; // 数字をプラス1する
-            }
+            // 連打対策：すでに「Downloading...」の時は何もしない
+            if (downloadBtn.innerText === "Downloading...") return;
 
+            // まずボタンをねずみ色にして待機状態にする
             downloadBtn.innerText = "Downloading...";
-            downloadBtn.style.backgroundColor = "#444"; // ねずみ色固定
+            downloadBtn.style.backgroundColor = "#444"; 
             downloadBtn.style.color = "#888";            
             downloadBtn.style.boxShadow = "none";
 
+            // ★3秒のカウントダウンが始まったあと、終わる瞬間に判定する！
             setTimeout(() => {
+                // ブラウザの記憶部屋を確認
+                const hasDownloaded = localStorage.getItem("azure_downloaded");
+
+                // まだダウンロードした記録がなくて、数字の要素があれば「初めてのダウンロード」としてカウント！
+                if (!hasDownloaded && dlCount) {
+                    let currentCount = parseInt(dlCount.innerText) || 0;
+                    dlCount.innerText = currentCount + 1; // 数字を増やす
+                    
+                    // 「この人はもうダウンロードしたで」という証拠を保存
+                    localStorage.setItem("azure_downloaded", "true");
+                }
+
+                // 3秒経ったらボタンの見た目を元のテーマカラーに戻す
                 downloadBtn.innerText = "Download";
-                // 3秒後に元の色（夜なら水色、朝ならオレンジ）に自動で戻す
                 const isLight = document.documentElement.classList.contains("light-mode");
                 downloadBtn.style.backgroundColor = isLight ? "#ff9933" : "#66d9ff";
                 downloadBtn.style.color = "black";
                 downloadBtn.style.boxShadow = "";
-            }, 3000);
+            }, 3000); // 3秒（3000ミリ秒）待つ
         });
     }
 
