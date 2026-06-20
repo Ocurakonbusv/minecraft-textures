@@ -1,24 +1,25 @@
-// === ✨ ① ふわっと浮き出るアニメーション（完全復活！） ===
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting){
-            entry.target.classList.add("show");
-        }
-    });
-});
-
-// HTML内の「hidden」がついたカードを見つけてアニメーションをかける
-document.querySelectorAll(".hidden").forEach(el => {
-    observer.observe(el);
-});
-
-
-// === 🎮 ② タップ開閉・音・ダウンロード切り替えの全システム ===
 document.addEventListener("DOMContentLoaded", () => {
+
+    // === ✨ ① ふわっと浮き出るアニメーションシステム ===
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.classList.add("show");
+            }
+        });
+    });
+
+    // 画面内の「hidden」がついたカードを全部見張る
+    document.querySelectorAll(".hidden").forEach(el => {
+        observer.observe(el);
+    });
+
+
+    // === 🎮 ② 各種ギミックシステム ===
 
     // --- 一言メッセージのランダム切り替え ---
     const messages = [
-        "水色ベース of テクスチャです！",
+        "水色ベースのテクスチャです！",
         "制作期間は約1ヶ月です！",
         "1000人記念の配布テクスチャです！"
     ];
@@ -35,61 +36,60 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("msgIndex", nextIndex);
     }
 
-    // --- 🎵 剣を振る音（sound.mp3）の準備 ---
+    // --- 🎵 音（sound.mp3）の準備 ---
     const audio = new Audio("sound.mp3"); 
     audio.preload = "auto"; 
     audio.volume = 0.5;
 
 
-    // --- ③ 1つ目のカード（Azure 16x）の開閉＆スクロール区域の延長 ---
+    // --- ③ 1つ目のカード（Azure 16x）の開閉＆【余白を絶対に増やす処理】 ---
     const icon = document.getElementById("pack-icon");
     const infoSection = document.getElementById("pack-info-section");
 
     if (icon) {
         icon.addEventListener("click", () => {
             audio.currentTime = 0;
-            audio.play().catch(e => console.log("音再生エラー:", e));
+            audio.play().catch(e => console.log(e));
 
             icon.style.transform = "scale(0.9) rotate(-15deg)";
             setTimeout(() => icon.style.transform = "scale(1) rotate(0deg)", 100);
 
             if (infoSection) {
-                const isHidden = window.getComputedStyle(infoSection).display === "none";
-                if (isHidden) {
+                // 現在非表示（none）かどうかをチェック
+                if (infoSection.style.display === "none" || infoSection.style.display === "") {
                     infoSection.style.display = "block";
-                    // 開いたらスクロール区域（透明な余白）を500px増やす！
-                    document.body.style.paddingBottom = "500px";
+                    // 💡 開いたら画面の一番下に500pxの特大のスクロール区域を強制追加！
+                    document.body.style.setProperty("padding-bottom", "500px", "important");
                 } else {
                     infoSection.style.display = "none";
-                    // 閉じたら元に戻す！
-                    document.body.style.paddingBottom = "0px";
+                    // 閉じたら元に戻す
+                    document.body.style.setProperty("padding-bottom", "100px", "important");
                 }
             }
         });
     }
 
 
-    // --- ④ 2つ目のカード（Coming Soon）の開閉＆スクロール区域の延長 ---
+    // --- ④ 2つ目のカード（Coming Soon）の開閉＆【余白を絶対に増やす処理】 ---
     const soonTrigger = document.getElementById("soon-trigger");
     const soonLockBtn = document.getElementById("soon-lock-btn");
     const soonInfoSection = document.getElementById("soon-info-section");
 
     const toggleSoonSection = () => {
         audio.currentTime = 0;
-        audio.play().catch(e => console.log("音再生エラー:", e));
+        audio.play().catch(e => console.log(e));
 
         soonTrigger.style.transform = "scale(0.95)";
         setTimeout(() => soonTrigger.style.transform = "scale(1)", 100);
 
         if (soonInfoSection) {
-            const isHidden = window.getComputedStyle(soonInfoSection).display === "none";
-            if (isHidden) {
+            if (soonInfoSection.style.display === "none" || soonInfoSection.style.display === "") {
                 soonInfoSection.style.display = "block";
-                // カミングスーンが開いた時もスクロール区域を500px増やす！
-                document.body.style.paddingBottom = "500px";
+                // 💡 こっちが開いた時も500pxのスクロール区域を強制追加！
+                document.body.style.setProperty("padding-bottom", "500px", "important");
             } else {
                 soonInfoSection.style.display = "none";
-                document.body.style.paddingBottom = "0px";
+                document.body.style.setProperty("padding-bottom", "100px", "important");
             }
         }
     };
