@@ -1,6 +1,13 @@
-body {
+/* 💡 htmlとbodyの両方に、絶対にスクロールを許可する設定を強制する */
+html, body {
     margin: 0;
+    padding: 0;
     min-height: 100vh;
+    overflow-x: hidden; /* 横スクロールは禁止 */
+    overflow-y: auto !important; /* 縦スクロールは絶対に許可！ */
+}
+
+body {
     /* 背景画像を新しい名前「background.png」に修正した。 */
     background-image: url("background.png");
     background-size: cover;
@@ -40,8 +47,8 @@ header p {
     border: 2px solid #66d9ff;
     width: 90%;
     max-width: 500px;
-    margin-left: auto;  /* bodyのflexを消した代わりに、カード自体を中央寄せにする設定 */
-    margin-right: auto; /* bodyのflexを消した代わりに、カード自体を中央寄せにする設定 */
+    margin-left: auto;  /* カード自体を中央寄せにする設定 */
+    margin-right: auto; /* カード自体を中央寄せにする設定 */
 }
 
 /* ③ テクスチャ名 Azure 16x（2段階大きく！） */
@@ -69,15 +76,14 @@ h2 {
     box-shadow: 0 0 20px #66d9ff;
 }
 
+/* 💡 ふわっと浮き出る前の待機状態（位置のズレをなくして透明度だけにしてみる） */
 .hidden {
     opacity: 0;
-    transform: translateY(50px);
-    transition: 1s;
+    transition: opacity 1s, transform 1s;
 }
 
 .show {
     opacity: 1;
-    transform: translateY(0);
 }
 
 /* === ⚔️ 追加：アイコンの大きさ指定（115px × 115px） === */
@@ -100,3 +106,19 @@ h2 {
     color: #fff;
     border-radius: 10px;
     font-size: 1.2rem; /* 文字を少し大きく */
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 吹き出しの下の三角部分 */
+#random-msg::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
