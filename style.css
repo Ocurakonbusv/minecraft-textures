@@ -1,10 +1,28 @@
+/* 💡 通常時（ダークモード：夜）のカラー設定 */
+:root {
+    --bg-color: #1a1a1a;
+    --card-bg: rgba(0, 0, 0, 0.5);
+    --text-color: white;
+    --main-color: #66d9ff; /* いつもの綺麗な水色 */
+    --shadow-color: #66d9ff;
+}
+
+/* 💡 ライトモード（昼）に切り替わった時のカラー設定 */
+:root.light-mode {
+    --bg-color: #eef5fa;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --text-color: #222;
+    --main-color: #ff9933; /* 昼間っぽいオレンジゴールド */
+    --shadow-color: #ff9933;
+}
+
 html, body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
     overflow-x: hidden;
     overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch; /* スマホのスクロールをなめらかにする */
+    -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -12,9 +30,29 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    color: white;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     font-family: Arial, sans-serif;
     text-align: center;
+    transition: background-color 0.4s, color 0.4s;
+}
+
+/* 💡 ボタンを右上に固定するスタイル */
+.theme-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    color: var(--main-color);
+    border: 2px solid var(--main-color);
+    font-size: 1.4rem;
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--shadow-color);
+    transition: 0.3s;
 }
 
 header {
@@ -23,18 +61,19 @@ header {
 }
 
 h1 {
-    color: #66d9ff;
+    color: var(--main-color);
     font-size: 4rem;
-    text-shadow: 0 0 15px #66d9ff;
+    text-shadow: 0 0 15px var(--shadow-color);
+    transition: color 0.4s, text-shadow 0.4s;
 }
 
 header p {
-    color: #ddd;
+    color: var(--text-color);
     margin-top: 10px;
     font-size: 1.8rem;
+    opacity: 0.9;
 }
 
-/* 💡 ここに高さを強制的に計算させる設定を追加したで！ */
 .main-container {
     max-width: 800px;
     margin: 0 auto;
@@ -42,35 +81,46 @@ header p {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    min-height: 100%; /* 親要素いっぱいに広げる */
-    overflow: visible !important; /* 絶対にはみ出た中身を見せる */
+    min-height: 100%;
+    overflow: visible !important;
 }
 
 .card {
     margin-top: 100px;
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--card-bg);
     backdrop-filter: blur(10px);
     padding: 40px;
     border-radius: 20px;
     text-align: center;
-    border: 2px solid #66d9ff;
+    border: 2px solid var(--main-color);
     width: 90%;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
+    transition: background 0.4s, border 0.4s;
 }
 
 h2 {
-    color: #66d9ff;
+    color: var(--main-color);
     margin-bottom: 20px;
     font-size: 2.2rem;
+    transition: color 0.4s;
+}
+
+/* 💡 ダウンロードカウンターのスタイル */
+.download-counter {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--text-color);
+    opacity: 0.9;
 }
 
 .download-btn {
     display: inline-block;
     margin-top: 20px;
     padding: 20px 50px;
-    background: #66d9ff;
+    background: var(--main-color);
     color: black;
     text-decoration: none;
     border-radius: 10px;
@@ -80,7 +130,7 @@ h2 {
 }
 
 .download-btn:hover {
-    box-shadow: 0 0 20px #66d9ff;
+    box-shadow: 0 0 20px var(--shadow-color);
 }
 
 .hidden {
