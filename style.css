@@ -94,3 +94,57 @@ h1 { color: var(--main-color); font-size: 2.5rem; text-shadow: 0 0 10px var(--sh
     z-index: 1000;
     transition: 0.3s;
 }
+
+/* 🎮 マイクラ風：実績解除ポップアップのスタイル */
+.minecraft-toast {
+    position: fixed;
+    top: 20px;
+    right: -320px; /* 最初は画面の右外に隠しておく */
+    width: 280px;
+    background: #222;
+    border: 3px solid #444;
+    border-radius: 4px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    z-index: 9999;
+    transition: right 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* シャキッと出てくるマイクラ特有の動き */
+}
+
+/* ポップアップが画面内に滑り込んでくる時用のクラス */
+.minecraft-toast.show-toast {
+    right: 20px;
+}
+
+/* 実績のアイコン枠（水色のテーマカラーと連動） */
+.toast-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--main-color);
+    border-radius: 4px;
+    margin-right: 12px;
+    box-shadow: 0 0 8px var(--shadow-color);
+    transition: background 0.4s;
+}
+
+.toast-text {
+    text-align: left;
+}
+
+/* 「チャレンジ完了！」の黄色い文字 */
+.toast-title {
+    color: #ffff55;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin: 0;
+    text-shadow: 1px 1px 0px #333300;
+}
+
+/* 実績の内容テキスト */
+.toast-desc {
+    color: #ffffff;
+    font-size: 0.85rem;
+    margin: 3px 0 0 0;
+    text-shadow: 1px 1px 0px #222;
+}
