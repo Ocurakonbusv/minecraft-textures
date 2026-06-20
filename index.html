@@ -5,18 +5,21 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
-    /* 💡 最初から画面の一番下に少し余裕を持たせてスクロールしやすくする設定 */
+    /* 💡 最初から画面の一番下に少しだけ余裕を持たせておく設定 */
     body {
-        padding-bottom: 200px !important;
+        padding-bottom: 100px !important;
+        margin: 0;
+        background-color: #1a1a1a;
+        color: #eee;
     }
-    /* 💡 将来テクスチャをどんどん下に増やしていける広い区域 */
+    /* カードを縦に綺麗に並べるための外枠 */
     .main-container {
         max-width: 800px;
         margin: 0 auto;
         padding: 20px;
         display: flex;
         flex-direction: column;
-        gap: 40px; /* カード同士の間隔 */
+        gap: 40px;
     }
 </style>
 </head>
@@ -85,6 +88,8 @@
         <button class="download-btn" id="soon-lock-btn" style="background-color: #222; color: #444; border: 1px solid #333; cursor: pointer; box-shadow: none;">🔒 Locked</button>
     </div>
 
-</div> <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
