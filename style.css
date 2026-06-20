@@ -5,11 +5,10 @@ body {
     background-image: url("background.png");
     background-size: cover;
     background-position: center;
+    background-attachment: fixed; /* スクロールしても背景がズレないように固定 */
     color: white;
     font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: center; /* 要素を中央に寄せる設定 */
 }
 
 header {
@@ -41,6 +40,8 @@ header p {
     border: 2px solid #66d9ff;
     width: 90%;
     max-width: 500px;
+    margin-left: auto;  /* bodyのflexを消した代わりに、カード自体を中央寄せにする設定 */
+    margin-right: auto; /* bodyのflexを消した代わりに、カード自体を中央寄せにする設定 */
 }
 
 /* ③ テクスチャ名 Azure 16x（2段階大きく！） */
@@ -99,19 +100,3 @@ h2 {
     color: #fff;
     border-radius: 10px;
     font-size: 1.2rem; /* 文字を少し大きく */
-    font-weight: bold;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-/* 吹き出しの下の三角部分 */
-#random-msg::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 10px;
-    border-style: solid;
-    border-color: #333 transparent transparent transparent;
-}
