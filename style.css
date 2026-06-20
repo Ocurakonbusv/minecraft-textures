@@ -1,25 +1,19 @@
-/* 基本設定とテーマによる色の切り替え */
+/* 夜モード（デフォルト）の色設定 */
 :root {
     --bg-color: #1a1a1a;
     --card-bg: rgba(0, 0, 0, 0.5);
-    --text-color: white;
-    --main-color: #66d9ff;
+    --text-color: #ffffff;
+    --main-color: #66d9ff; /* おくらお気に入りのクールな水色 */
     --shadow-color: #66d9ff;
 }
 
+/* 朝モード（ライトモード）の色設定 */
 :root.light-mode {
     --bg-color: #eef5fa;
     --card-bg: rgba(255, 255, 255, 0.85);
-    --text-color: #222;
-    --main-color: #ff9933;
+    --text-color: #222222;
+    --main-color: #ff9933; /* 朝っぽいオレンジ */
     --shadow-color: #ff9933;
-}
-
-/* ページ全体のスタイル */
-html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
 }
 
 body {
@@ -31,38 +25,48 @@ body {
     color: var(--text-color);
     font-family: Arial, sans-serif;
     text-align: center;
+    margin: 0;
+    padding: 20px;
     transition: background-color 0.4s, color 0.4s;
 }
 
-/* ヘッダーとカード */
-header { margin-top: 80px; }
-h1 { color: var(--main-color); font-size: 3rem; text-shadow: 0 0 15px var(--shadow-color); transition: 0.4s; }
+header { margin-top: 60px; }
+h1 { color: var(--main-color); font-size: 2.5rem; text-shadow: 0 0 10px var(--shadow-color); transition: 0.4s; }
 
 .main-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
 }
 
 .card {
     background: var(--card-bg);
     backdrop-filter: blur(10px);
-    padding: 40px;
+    padding: 30px;
     border-radius: 20px;
     border: 2px solid var(--main-color);
     width: 90%;
     max-width: 400px;
     margin: 0 auto;
-    transition: 0.4s;
+    transition: background 0.4s, border 0.4s;
 }
 
-/* ボタン類 */
+/* === ✨ おくら流：ふわっと浮き出るアニメーション設定 === */
+.hidden {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1.2s ease-out;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ダウンロードボタンの共通スタイル */
 .download-btn {
     display: inline-block;
-    padding: 20px 50px;
+    padding: 15px 40px;
     background: var(--main-color);
     color: black;
     text-decoration: none;
@@ -70,21 +74,27 @@ h1 { color: var(--main-color); font-size: 3rem; text-shadow: 0 0 15px var(--shad
     font-weight: bold;
     margin-top: 20px;
     transition: 0.3s;
+    border: none;
+    cursor: pointer;
 }
 
+.download-btn:hover {
+    box-shadow: 0 0 15px var(--shadow-color);
+}
+
+/* ☀️ テーマ切り替えボタンのスタイル */
 .theme-btn {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 1000;
+    background: var(--card-bg);
+    border: 2px solid var(--main-color);
+    color: var(--main-color);
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: var(--card-bg);
-    color: var(--main-color);
-    border: 2px solid var(--main-color);
     cursor: pointer;
-    font-size: 1.4rem;
-    box-shadow: 0 0 10px var(--shadow-color);
+    font-size: 1.2rem;
+    z-index: 1000;
     transition: 0.3s;
 }
