@@ -3,7 +3,7 @@
     --bg-color: #1a1a1a;
     --card-bg: rgba(0, 0, 0, 0.5);
     --text-color: white;
-    --main-color: #66d9ff; /* いつもの綺麗な水色 */
+    --main-color: #66d9ff;
     --shadow-color: #66d9ff;
 }
 
@@ -12,7 +12,7 @@
     --bg-color: #eef5fa;
     --card-bg: rgba(255, 255, 255, 0.85);
     --text-color: #222;
-    --main-color: #ff9933; /* 昼間っぽいオレンジゴールド */
+    --main-color: #ff9933;
     --shadow-color: #ff9933;
 }
 
@@ -86,7 +86,7 @@ header p {
 }
 
 .card {
-    margin-top: 100px;
+    margin-top: 40px; /* 💡 少し上の余白を調整して綺麗に見えるようにしたで */
     background: var(--card-bg);
     backdrop-filter: blur(10px);
     padding: 40px;
@@ -107,7 +107,6 @@ h2 {
     transition: color 0.4s;
 }
 
-/* ダウンロードカウンターのスタイル */
 .download-counter {
     margin-bottom: 20px;
     font-size: 1.1rem;
@@ -131,15 +130,6 @@ h2 {
 
 .download-btn:hover {
     box-shadow: 0 0 20px var(--shadow-color);
-}
-
-.hidden {
-    opacity: 0;
-    transition: opacity 1s;
-}
-
-.show {
-    opacity: 1;
 }
 
 #pack-icon {
