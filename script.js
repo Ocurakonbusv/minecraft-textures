@@ -1,4 +1,4 @@
-// === ✨ ① ふわっと浮き出るアニメーション（完全復活！） ===
+// === ✨ ① ふわっと浮き出るアニメーション ===
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if(entry.isIntersecting){
@@ -7,18 +7,17 @@ const observer = new IntersectionObserver(entries => {
     });
 });
 
-// HTML内の「hidden」がついたカードを見つけてアニメーションをかける
 document.querySelectorAll(".hidden").forEach(el => {
     observer.observe(el);
 });
 
 
-// === 🎮 ② タップ開閉・音・ダウンロード切り替えの全システム ===
+// === 🎮 ② 全システム完全復活版 ===
 document.addEventListener("DOMContentLoaded", () => {
 
     // --- 一言メッセージのランダム切り替え ---
     const messages = [
-        "水色ベースのテクスチャです！",
+        "水色ベース of テクスチャです！",
         "制作期間は約1ヶ月です！",
         "1000人記念の配布テクスチャです！"
     ];
@@ -57,11 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 const isHidden = window.getComputedStyle(infoSection).display === "none";
                 if (isHidden) {
                     infoSection.style.display = "block";
-                    // 開いたらスクロール区域（透明な余白）を500px増やす！
                     document.body.style.paddingBottom = "500px";
                 } else {
                     infoSection.style.display = "none";
-                    // 閉じたら元に戻す！
                     document.body.style.paddingBottom = "0px";
                 }
             }
@@ -69,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // --- ④ 2つ目のカード（Coming Soon）の開閉＆スクロール区域の延長 ---
+    // --- ④ 2つ目のカード（Coming Soon）の開閉＆ねずみ色画像表示 ---
     const soonTrigger = document.getElementById("soon-trigger");
     const soonLockBtn = document.getElementById("soon-lock-btn");
     const soonInfoSection = document.getElementById("soon-info-section");
@@ -87,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const isHidden = window.getComputedStyle(soonInfoSection).display === "none";
             if (isHidden) {
                 soonInfoSection.style.display = "block";
-                // カミングスーンが開いた時もスクロール区域を500px増やす！
                 document.body.style.paddingBottom = "500px";
             } else {
                 soonInfoSection.style.display = "none";
@@ -100,31 +96,38 @@ document.addEventListener("DOMContentLoaded", () => {
     if (soonLockBtn) soonLockBtn.addEventListener("click", toggleSoonSection);
 
 
-    // --- ⑤ ダウンロードボタンの切り替え ---
+    // --- ⑤ ダウンロードボタンの切り替え（ねずみ色化を固定！） ---
     const downloadBtn = document.getElementById("download-btn");
     if (downloadBtn) {
         downloadBtn.addEventListener("click", () => {
             downloadBtn.innerText = "Downloading...";
-            downloadBtn.style.backgroundColor = "#444";
-            downloadBtn.style.color = "#888";
+            downloadBtn.style.backgroundColor = "#444"; // ここでねずみ色にする！
+            downloadBtn.style.color = "#888";            // 文字を暗いグレーにする！
             downloadBtn.style.boxShadow = "none";
 
             setTimeout(() => {
                 downloadBtn.innerText = "Download";
-                downloadBtn.style.backgroundColor = "var(--main-color)"; // CSS変数にして連動！
+                // 3秒後に元の色（夜なら水色、朝ならオレンジ）に自動で戻す設定
+                const isLight = document.documentElement.classList.contains("light-mode");
+                downloadBtn.style.backgroundColor = isLight ? "#ff9933" : "#66d9ff";
                 downloadBtn.style.color = "black";
                 downloadBtn.style.boxShadow = "";
             }, 3000);
         });
     }
 
-    // --- ☀️ 追加：朝と夜になるテーマ切り替え機能 ---
+    // --- ☀️ 朝と夜になるテーマ切り替え機能 ---
     const themeToggle = document.getElementById("theme-toggle");
     if (themeToggle) {
         themeToggle.addEventListener("click", () => {
             document.documentElement.classList.toggle("light-mode");
             const isLight = document.documentElement.classList.contains("light-mode");
             themeToggle.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            
+            // もしダウンロード中じゃなければ、ボタンの色もテーマに合わせる
+            if (downloadBtn && downloadBtn.innerText !== "Downloading...") {
+                downloadBtn.style.backgroundColor = isLight ? "#ff9933" : "#66d9ff";
+            }
         });
     }
 });
