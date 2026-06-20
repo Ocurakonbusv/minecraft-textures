@@ -1,71 +1,118 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Minecraft Textures</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<style>
-    /* 💡 サイト全体をゆったり広げる */
-    body {
-        padding-bottom: 200px; /* 最初から一番下に少し余裕を持たせて広々させる */
-    }
-    .main-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 40px; /* カードとカードの間の隙間を広めにとって見やすくした */
-    }
-</style>
-</head>
-<body>
+// === ✨ ① ふわっと浮き出るアニメーション（完全復活！） ===
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+});
 
-<header>
-    <h1>Minecraft Textures</h1>
-    <p>Texture Pack Downloads</p>
+// HTML内の「hidden」がついたカードを見つけてアニメーションをかける
+document.querySelectorAll(".hidden").forEach(el => {
+    observer.observe(el);
+});
+
+
+// === 🎮 ② タップ開閉・音・ダウンロード切り替えの全システム ===
+document.addEventListener("DOMContentLoaded", () => {
+
+    // --- 一言メッセージのランダム切り替え ---
+    const messages = [
+        "水色ベース of テクスチャです！",
+        "制作期間は約1ヶ月です！",
+        "1000人記念の配布テクスチャです！"
+    ];
+    const msgElement = document.getElementById("random-msg");
     
-    <div style="margin-top: 15px;">
-        <a href="https://www.youtube.com/@おくらこんぶ" target="_blank" style="color: #ff0000; font-size: 2rem; text-decoration: none; margin: 0 10px; transition: opacity 0.2s;"><i class="fab fa-youtube"></i></a>
-    </div>
-</header>
+    if (msgElement) {
+        let currentIndex = parseInt(localStorage.getItem("msgIndex")) || 0;
+        if (currentIndex >= messages.length) {
+            currentIndex = 0;
+        }
+        msgElement.innerText = messages[currentIndex];
 
-<div class="main-container">
+        let nextIndex = (currentIndex + 1) % messages.length;
+        localStorage.setItem("msgIndex", nextIndex);
+    }
 
-    <div class="card hidden">
-        <h2>Azure 16x</h2>
-        
-        <img src="icon.png" alt="Pack Icon" id="pack-icon" style="width: 100px; height: 100px; border-radius: 10px; margin-bottom: 20px; border: 2px solid #66d9ff; cursor: pointer; transition: transform 0.1s;">
-        
-        <p id="random-msg" style="color: #66d9ff; font-weight: bold; font-size: 1.1rem; margin-bottom: 20px; width: 100%; text-align: center; display: block;"></p>
-        
-        <div id="pack-info-section" style="display: none; margin-top: 20px; text-align: center;">
-            <img src="screenshot1.png" alt="Azure 16x スクショ1" style="width: 100%; max-width: 400px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 10px; border: 1px solid #66d9ff; margin-bottom: 10px;">
-            <img src="screenshot2.png" alt="Azure 16x スクショ2" style="width: 100%; max-width: 400px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 10px; border: 1px solid #66d9ff; margin-bottom: 15px;">
-            
-            <p style="color: #eee; font-size: 1.1rem; line-height: 1.6; padding: 0 10px; text-align: left; margin-top: 15px; margin-bottom: 20px;">
-                Azure16xというテクスチャです。水色がベースのテクスチャで、1000人記念で配布しました。
-                UIなどは見やすく調整し、装備やその他ツール類なども頑張ったので是非使ってほしいです！
-            </p>
+    // --- 🎵 剣を振る音（sound.mp3）の準備 ---
+    const audio = new Audio("sound.mp3"); 
+    audio.preload = "auto"; 
+    audio.volume = 0.5;
 
-            <table style="width: 90%; margin: 0 auto 20px auto; border-collapse: collapse; font-size: 0.9rem; color: #ccc; text-align: left; background: rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden;">
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 10px; font-weight: bold; color: #66d9ff;">対応機種</td><td style="padding: 10px;">iOS / Android / Win10 (統合版)</td></tr>
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 10px; font-weight: bold; color: #66d9ff;">解像度</td><td style="padding: 10px;">16x16</td></tr>
-                <tr><td style="padding: 10px; font-weight: bold; color: #66d9ff;">容量</td><td style="padding: 10px;">473 KB</td></tr>
-            </table>
-        </div>
-        
-        <a href="Azure_16x.mcpack" download class="download-btn" id="download-btn">Download</a>
-    </div>
 
-    <div class="card hidden" style="border: 2px dashed #444; background: rgba(0,0,0,0.2); opacity: 0.8; padding-top: 30px; padding-bottom: 30px;">
-        <h2 style="color: #888; margin-bottom: 15px;">Next Texture</h2>
-        
-        <div id="soon-trigger" style="cursor: pointer; transition: transform 0.1s; display: inline-block; width: 100%;">
-            <p style="color: #666; font-weight: bold; font-size: 1.4rem; margin-bottom: 25px; text-align: center; letter-spacing: 2px;">
-                <i class="fas fa-lock" style="margin-right: 8px; color: #444;"></i>Coming Soon...
-            </p>
-        </div>
+    // --- ③ 1つ目のカード（Azure 16x）の開閉＆スクロール区域の延長 ---
+    const icon = document.getElementById("pack-icon");
+    const infoSection = document.getElementById("pack-info-section");
 
-        <div id="soon-info-section" style="display: none; margin-top: 20px; text-align: center;">
-            <div style="width: 100%; max-width: 400px; aspect-ratio: 16 / 9; margin: 0 auto 10px auto; border-radius: 10px; border: 2px dashed #444; background:
+    if (icon) {
+        icon.addEventListener("click", () => {
+            audio.currentTime = 0;
+            audio.play().catch(e => console.log("音再生エラー:", e));
+
+            icon.style.transform = "scale(0.9) rotate(-15deg)";
+            setTimeout(() => icon.style.transform = "scale(1) rotate(0deg)", 100);
+
+            if (infoSection) {
+                const isHidden = window.getComputedStyle(infoSection).display === "none";
+                if (isHidden) {
+                    infoSection.style.display = "block";
+                    // 開いたらスクロール区域（透明な余白）を500px増やす！
+                    document.body.style.paddingBottom = "500px";
+                } else {
+                    infoSection.style.display = "none";
+                    // 閉じたら元に戻す！
+                    document.body.style.paddingBottom = "0px";
+                }
+            }
+        });
+    }
+
+
+    // --- ④ 2つ目のカード（Coming Soon）の開閉＆スクロール区域の延長 ---
+    const soonTrigger = document.getElementById("soon-trigger");
+    const soonLockBtn = document.getElementById("soon-lock-btn");
+    const soonInfoSection = document.getElementById("soon-info-section");
+
+    const toggleSoonSection = () => {
+        audio.currentTime = 0;
+        audio.play().catch(e => console.log("音再生エラー:", e));
+
+        soonTrigger.style.transform = "scale(0.95)";
+        setTimeout(() => soonTrigger.style.transform = "scale(1)", 100);
+
+        if (soonInfoSection) {
+            const isHidden = window.getComputedStyle(soonInfoSection).display === "none";
+            if (isHidden) {
+                soonInfoSection.style.display = "block";
+                // カミングスーンが開いた時もスクロール区域を500px増やす！
+                document.body.style.paddingBottom = "500px";
+            } else {
+                soonInfoSection.style.display = "none";
+                document.body.style.paddingBottom = "0px";
+            }
+        }
+    };
+
+    if (soonTrigger) soonTrigger.addEventListener("click", toggleSoonSection);
+    if (soonLockBtn) soonLockBtn.addEventListener("click", toggleSoonSection);
+
+
+    // --- ⑤ ダウンロードボタンの切り替え ---
+    const downloadBtn = document.getElementById("download-btn");
+    if (downloadBtn) {
+        downloadBtn.addEventListener("click", () => {
+            downloadBtn.innerText = "Downloading...";
+            downloadBtn.style.backgroundColor = "#444";
+            downloadBtn.style.color = "#888";
+            downloadBtn.style.boxShadow = "none";
+
+            setTimeout(() => {
+                downloadBtn.innerText = "Download";
+                downloadBtn.style.backgroundColor = "#66d9ff";
+                downloadBtn.style.color = "black";
+                downloadBtn.style.boxShadow = "";
+            }, 3000);
+        });
+    }
+});
