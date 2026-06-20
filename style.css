@@ -1,4 +1,4 @@
-/* 💡 通常時（ダークモード：夜）のカラー設定 */
+/* 通常時（ダークモード：夜）のカラー設定 */
 :root {
     --bg-color: #1a1a1a;
     --card-bg: rgba(0, 0, 0, 0.5);
@@ -7,7 +7,7 @@
     --shadow-color: #66d9ff;
 }
 
-/* 💡 ライトモード（昼）に切り替わった時のカラー設定 */
+/* ライトモード（昼）に切り替わった時のカラー設定 */
 :root.light-mode {
     --bg-color: #eef5fa;
     --card-bg: rgba(255, 255, 255, 0.85);
@@ -37,7 +37,7 @@ body {
     transition: background-color 0.4s, color 0.4s;
 }
 
-/* 💡 ボタンを右上に固定するスタイル */
+/* 切り替えボタンのスタイル */
 .theme-btn {
     position: fixed;
     top: 20px;
@@ -107,7 +107,7 @@ h2 {
     transition: color 0.4s;
 }
 
-/* 💡 ダウンロードカウンターのスタイル */
+/* ダウンロードカウンターのスタイル */
 .download-counter {
     margin-bottom: 20px;
     font-size: 1.1rem;
