@@ -96,18 +96,26 @@ document.addEventListener("DOMContentLoaded", () => {
     if (soonLockBtn) soonLockBtn.addEventListener("click", toggleSoonSection);
 
 
-    // --- ⑤ ダウンロードボタンの切り替え（ねずみ色化を固定！） ---
+    // --- ⑤ ダウンロードボタンの切り替え（★カウントアップ追加！） ---
     const downloadBtn = document.getElementById("download-btn");
+    const dlCount = document.getElementById("dl-count"); // HTMLの数字部分を見つける
+
     if (downloadBtn) {
         downloadBtn.addEventListener("click", () => {
+            // 連打対策：ボタンが「Download」状態の時だけ数字を増やす
+            if (dlCount && downloadBtn.innerText === "Download") {
+                let currentCount = parseInt(dlCount.innerText) || 0;
+                dlCount.innerText = currentCount + 1; // 数字をプラス1する
+            }
+
             downloadBtn.innerText = "Downloading...";
-            downloadBtn.style.backgroundColor = "#444"; // ここでねずみ色にする！
-            downloadBtn.style.color = "#888";            // 文字を暗いグレーにする！
+            downloadBtn.style.backgroundColor = "#444"; // ねずみ色固定
+            downloadBtn.style.color = "#888";            
             downloadBtn.style.boxShadow = "none";
 
             setTimeout(() => {
                 downloadBtn.innerText = "Download";
-                // 3秒後に元の色（夜なら水色、朝ならオレンジ）に自動で戻す設定
+                // 3秒後に元の色（夜なら水色、朝ならオレンジ）に自動で戻す
                 const isLight = document.documentElement.classList.contains("light-mode");
                 downloadBtn.style.backgroundColor = isLight ? "#ff9933" : "#66d9ff";
                 downloadBtn.style.color = "black";
