@@ -1,20 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // === ✨ ① ふわっと浮き出るアニメーションシステム ===
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if(entry.isIntersecting){
-                entry.target.classList.add("show");
-            }
-        });
-    });
-
-    document.querySelectorAll(".hidden").forEach(el => {
-        observer.observe(el);
-    });
-
-
-    // === 🎮 ② 各種ギミックシステム ===
+    // === 🎮 ① 各種ギミックシステム ===
 
     // --- 一言メッセージのランダム切り替え ---
     const messages = [
@@ -41,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     audio.volume = 0.5;
 
 
-    // --- ③ 1つ目のカード（Azure 16x）の開閉 ---
+    // --- ② 1つ目のカード（Azure 16x）の開閉 ---
     const icon = document.getElementById("pack-icon");
     const infoSection = document.getElementById("pack-info-section");
 
@@ -66,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // --- ④ 2つ目のカード（Coming Soon）の開閉 ---
+    // --- ③ 2つ目のカード（Coming Soon）の開閉 ---
     const soonTrigger = document.getElementById("soon-trigger");
     const soonLockBtn = document.getElementById("soon-lock-btn");
     const soonInfoSection = document.getElementById("soon-info-section");
@@ -93,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (soonLockBtn) soonLockBtn.addEventListener("click", toggleSoonSection);
 
 
-    // === 📊 ⑤ ダウンロードカウンターの制御 ===
+    // === 📊 ④ ダウンロードカウンターの制御 ===
     const downloadBtn = document.getElementById("download-btn");
     const dlCountEl = document.getElementById("dl-count");
     
@@ -129,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // === 🌓 ⑥ 昼と夜の切り替えシステム ===
+    // === 🌓 ⑤ 昼と夜の切り替えシステム ===
     const themeToggle = document.getElementById("theme-toggle");
     const currentTheme = localStorage.getItem("theme") || "dark";
 
