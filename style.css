@@ -102,3 +102,35 @@ h1 { color: var(--main-color); font-size: 2.5rem; text-shadow: 0 0 10px var(--sh
     cursor: pointer;
     font-size: 1.2rem;
     z-index:
+/* 💬 ディスコードボタンの基本スタイル */
+.discord-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #5865F2; /* ディスコードの公式ブルー */
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+    transition: all 0.3s ease; /* 動きを滑らかにする設定 */
+    cursor: pointer;
+}
+
+/* ✨ マウスを乗せたとき（ホバー時）のド派手な演出 */
+.discord-btn:hover {
+    transform: translateY(-4px); /* ちょっと上に浮き上がる */
+    background-color: #4752C4; /* 色がちょっと濃くなる */
+    box-shadow: 0 0 20px #5865F2, 0 0 30px #5865F2; /* 周りがビカビカに光る */
+    border-color: #00ffff; /* 枠線が水色に変わる */
+}
+
+/* 📱 ボタンの中のアイコンをちょっと動かす */
+.discord-icon {
+    font-size: 1.3rem;
+}
