@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "1000人記念の配布テクスチャです！"
     ]);
 
-    createTexturePackGimmick(2, "Texture Pack v2", [
+    createTexturePackGimmick(2, "Eclipse 32x", [
         "結構前に作ったテクスチャです！",
         "細部までこだわって作りました！",
         "紺色ベースのテクスチャです！"
